@@ -1,0 +1,51 @@
+name: Deploy no PythonAnywhere
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar o Poetry
+        run: pipx install poetry
+
+      - name: Instalar dependências
+        run: poetry install --no-interaction --no-ansi
+
+      - name: Deploy no PythonAnywhere
+        env:
+          PYTHONANYWHERE_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
+          PYTHONANYWHERE_USERNAME: ${{ secrets.PYTHONANYWHERE_USERNAME }}
+        run: |
+          PA_API=https://www.pythonanywhere.com/api/v0/user/${{ secrets.PYTHONANYWHERE_USERNAME }}/
+          echo "Deploying to PythonAnywhere"
+
+          curl -X POST "${PA_API}consoles/execute/" \
+            -H "Authorization: Token ${{ secrets.PYTHONANYWHERE_API_TOKEN }}" \
+            -d "command=cd ~/correiospkg && git pull"
+
+          curl -X POST "${PA_API}consoles/execute/" \
+            -H "Authorization: Token ${{ secrets.PYTHONANYWHERE_API_TOKEN }}" \
+            -d "command=cd ~/correiospkg && poetry install"
+
+          curl -X POST "${PA_API}consoles/execute/" \
+            -H "Authorization: Token ${{ secrets.PYTHONANYWHERE_API_TOKEN }}" \
+            -d "command=cd ~/correiospkg && poetry run python manage.py collectstatic --noinput"
+
+          curl -X POST "${PA_API}webapps/${{ secrets.PYTHONANYWHERE_USERNAME }}.pythonanywhere.com/reload/" \
+            -H "Authorization: Token ${{ secrets.PYTHONANYWHERE_API_TOKEN }}"
+
+          echo "Deploy finalizado!"
