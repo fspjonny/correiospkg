@@ -6,8 +6,8 @@
 <div class="flex flex-col min-h-screen">
     <!-- Div principal com o conteúdo e o gradiente -->
     <div class="flex-grow bg-gradient-to-b from-blue-800 to-blue-500">
-        <div class="px-8">
-            <div class="flex flex-col place-items-center gap-5 bg-gradient-to-b from-green-700 to-green-500 mt-10 p-6 rounded-md shadow-lg shadow-slate-700">
+        <div class="px-2 sm:px-8">
+            <div class="flex flex-col place-items-center gap-5 bg-gradient-to-b from-green-700 to-green-500 mt-5 p-6 rounded-md shadow-lg shadow-slate-700">
                 <span class="text-xl text-center font-semibold">Rastreamento Correios - Objetos</span>
                 <span class="text-center">Informe o código de rastreamento dos correios no campo abaixo e clique em enviar</span>
 
@@ -20,12 +20,12 @@
             {% if tracking_data %}
             <div class="flex flex-col bg-blue-900 my-6 rounded-md overflow-y-auto">
                 <span class="bg-blue-800 w-max mx-auto text-white p-2 my-4 rounded-md font-semibold shadow-sm shadow-black">Histórico do Objeto: {{ tracking_code }}</span>
-                <ul class="bg-blue-900 rounded-md shadow-lg shadow-black">
+                <ul class="bg-blue-900 rounded-md">
                     {% for status in tracking_data %}
-                    <li class="hover:bg-blue-700 rounded-md mx-2 cursor-pointer">
-                        <ul class="mx-1 my-6">
+                    <li class="hover:bg-blue-700 rounded-md mx-2 cursor-pointer hover:shadow-sm hover:shadow-black">
+                        <ul class="p-2 mx-1 my-2 text-blue-200 hover:text-yellow-300">
                             {% for detail in status %}
-                            <li class="text-blue-200">
+                            <li>
                                 <span class="tracking-wide">
                                     {{ detail }}
                                 </span>
