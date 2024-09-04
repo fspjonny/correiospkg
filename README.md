@@ -19,6 +19,7 @@ Para executar este projeto localmente, você precisará ter instalado:
 - Python-Decouple ^3.8
 - BeautifulSoup4 ^4.12.3
 - Requests ^2.32.3
+- Gunicorn ^23.0.0
 
 #### Dependências de desenvolvimento:
 
