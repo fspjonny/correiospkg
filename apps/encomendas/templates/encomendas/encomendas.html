@@ -1,46 +1,46 @@
 {% extends 'base.html' %}
 
-{% block title %} Rastreio de encomendas{% endblock %}
-
+{% block title %} Rastreio de Encomendas{% endblock %}
 
 {% block main %}
-<div class="flex flex-col min-h-screen bg-gradient-to-b from-blue-800 to-blue-500">
-    <div class="px-8">
-        <div class="flex flex-col place-items-center gap-5 bg-gradient-to-b from-green-700 to-green-500 mt-10 p-6 rounded-md shadow-lg shadow-slate-700">
-            <span class="text-xl text-center font-semibold">Rastreamento Correios - Objetos</span>
-            <span class="text-center">Informe o código de rastreamento dos correios no campo abaixo e clique em enviar</span>
-            
-            <form class="flex flex-col sm:flex-row justify-center w-full gap-4 sm:gap-0" action="{% url 'rastrear' %}" method="get">
-                <input class="bg-gray-100 p-3 rounded-md sm:rounded-none sm:rounded-l-md sm:w-1/2 text-sm" type="text" name="tracking_code" id="tracking_code" placeholder="Digite o código de rastreio" value="{{ tracking_code }}">
-                <input class="bg-blue-500 hover:bg-blue-700 p-3 px-8 rounded-md sm:rounded-none sm:rounded-r-md text-white hover:text-yellow-200 text-sm font-semibold cursor-pointer" type="submit" value="Enviar">
-            </form>
-        </div>
-        {% if tracking_data %}
-        <div class="flex flex-col bg-blue-900 my-6 rounded-md overflow-y-auto">
-            <span class="bg-blue-800 w-max mx-auto text-white p-2 my-4 rounded-md font-semibold">Histórico do Objeto: {{ tracking_code }}</span>
+<div class="flex flex-col min-h-screen">
+    <!-- Div principal com o conteúdo e o gradiente -->
+    <div class="flex-grow bg-gradient-to-b from-blue-800 to-blue-500">
+        <div class="px-8">
+            <div class="flex flex-col place-items-center gap-5 bg-gradient-to-b from-green-700 to-green-500 mt-10 p-6 rounded-md shadow-lg shadow-slate-700">
+                <span class="text-xl text-center font-semibold">Rastreamento Correios - Objetos</span>
+                <span class="text-center">Informe o código de rastreamento dos correios no campo abaixo e clique em enviar</span>
 
-            <ul class="bg-blue-900 rounded-md shadow-lg shadow-black">
-                {% for status in tracking_data %}
-                <li class="hover:bg-blue-700 rounded-md mx-2 cursor-pointer">
-                    <ul class="mx-1 my-6">
-                        {% for detail in status %}
-                        <li class="text-blue-200">
-                            <span class="tracking-wide">
-                                {{ detail }}
-                            </span>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </li>
-                {% endfor %}
-            </ul>
+                <form class="flex flex-col sm:flex-row justify-center w-full gap-4 sm:gap-0" action="{% url 'rastrear' %}" method="get">
+                    <input class="bg-gray-100 p-3 rounded-md sm:rounded-none sm:rounded-l-md sm:w-1/2 text-sm" type="text" name="tracking_code" id="tracking_code" placeholder="Digite o código de rastreio" value="{{ tracking_code }}">
+                    <input class="bg-blue-500 hover:bg-blue-700 p-3 px-8 rounded-md sm:rounded-none sm:rounded-r-md text-white hover:text-yellow-200 text-sm font-semibold cursor-pointer" type="submit" value="Enviar">
+                </form>
+            </div>
 
+            {% if tracking_data %}
+            <div class="flex flex-col bg-blue-900 my-6 rounded-md overflow-y-auto">
+                <span class="bg-blue-800 w-max mx-auto text-white p-2 my-4 rounded-md font-semibold shadow-sm shadow-black">Histórico do Objeto: {{ tracking_code }}</span>
+                <ul class="bg-blue-900 rounded-md shadow-lg shadow-black">
+                    {% for status in tracking_data %}
+                    <li class="hover:bg-blue-700 rounded-md mx-2 cursor-pointer">
+                        <ul class="mx-1 my-6">
+                            {% for detail in status %}
+                            <li class="text-blue-200">
+                                <span class="tracking-wide">
+                                    {{ detail }}
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% elif error %}
+            <p>{{ error }}</p>
+            {% endif %} 
         </div>
-        {% elif error %}
-        <p>{{ error }}</p>
-        {% endif %}        
     </div>
-</div>
 {% endblock %}
 
 {% block footer %}

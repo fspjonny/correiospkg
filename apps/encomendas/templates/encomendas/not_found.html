@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Rastreio de encomendas | Objeto não encontrado{% endblock %}
+
+{% block main %}
+<div class="flex flex-col min-h-screen">
+    <!-- Div principal com o conteúdo e o gradiente -->
+    <div class="flex-grow bg-gradient-to-b from-blue-800 to-blue-500">
+        <div class="px-8">
+            <div class="flex flex-col bg-blue-900 my-6 rounded-md overflow-y-auto">
+                <span class="bg-blue-800 w-max mx-auto text-white p-2 my-4 rounded-md font-semibold shadow-sm shadow-black">Objeto não encontrado: {{ tracking_code }}</span>
+
+                <span class="mt-4 text-2xl text-center text-yellow-300 font-bold">O objeto requisitado não foi encontrado!</span>
+                <span class="my-6 text-xl text-center text-white">Por favor verifique se o código de rastreamento do objeto está correto e tente novamente!</span>
+                <a class="bg-gray-500 hover:bg-gray-600 text-white hover:text-yellow-300 px-4 py-2 cursor-pointer text-center mx-auto w-max rounded-md m-6 shadow-sm shadow-black" 
+                    href="javascript:history.back()">Voltar a página inicial
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock %}

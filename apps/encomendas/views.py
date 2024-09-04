@@ -19,7 +19,6 @@ def rastrear_encomenda(request):
 
             soup = BeautifulSoup(response.content, 'html.parser')
 
-
             singlepost = soup.find('div', class_='singlepost')
 
             if singlepost:
@@ -32,6 +31,8 @@ def rastrear_encomenda(request):
                     status_text = [li.get_text(strip=True) for li in status_details]
                     tracking_data.append(status_text)
                 return render(request, 'encomendas/encomendas.html', {'tracking_data': tracking_data, 'tracking_code': tracking_code})
+            else:
+                return render(request, 'encomendas/not_found.html', {'tracking_code': tracking_code})
         
         else:
             return render(request, 'encomendas/encomendas.html', {'error': 'Erro ao acessar o site de rastreamento.', 'tracking_code': tracking_code})
